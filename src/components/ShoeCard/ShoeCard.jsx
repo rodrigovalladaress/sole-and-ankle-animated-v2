@@ -76,13 +76,71 @@ const Image = styled.img`
 
   @media (prefers-reduced-motion: no-preference) {
     transform-origin: center 80%;
-    transition: transform 250ms;
+    transition: transform 250ms, filter 250ms;
   }
 `;
 
 const ImageBorder = styled.div`
   border-radius: 16px 16px 4px 4px;
   overflow: hidden;
+`;
+
+const Flag = styled.div`
+  position: absolute;
+  top: 12px;
+  right: -4px;
+  background: red;
+  height: 32px;
+  line-height: 32px;
+  padding: 0 10px;
+  font-size: ${14 / 18}rem;
+  font-weight: ${WEIGHTS.bold};
+  color: var(--color-white);
+  border-radius: 2px;
+  overflow: hidden;
+  isolation: isolate;
+
+  &:before {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    inset: 0;
+    transform: translateX(100%) scaleX(-500%);
+  }
+`;
+
+const SaleFlag = styled(Flag)`
+  background-color: var(--color-primary);
+
+  &::before {
+    background-color: var(--color-primary);
+    background: linear-gradient(
+      -85deg,
+      var(--color-primary) 0%,
+      var(--color-primary) 40%,
+      hsl(340.45, 77.39%, 77.45%) 54%,
+      hsl(340.45, 77.39%, 77.45%) 56%,
+      var(--color-primary) 60%,
+      var(--color-primary) 100%
+    );
+  }
+`;
+
+const NewFlag = styled(Flag)`
+  background-color: var(--color-secondary);
+
+  &::before {
+    background-color: var(--color-secondary);
+    background: linear-gradient(
+      -85deg,
+      var(--color-secondary) 0%,
+      var(--color-secondary) 40%,
+      hsl(240, 45.13%, 77.84%) 54%,
+      hsl(240, 45.13%, 77.84%) 56%,
+      var(--color-secondary) 60%,
+      var(--color-secondary) 100%
+    );
+  }
 `;
 
 const Link = styled.a`
@@ -94,7 +152,24 @@ const Link = styled.a`
 
     @media (prefers-reduced-motion: no-preference) {
       will-change: transform;
-      transition: transform 75ms;
+      filter: saturate(1.2);
+      transition: transform 75ms, filter 75ms;
+    }
+  }
+
+  &:hover ${Flag}::before {
+    transform: translateX(-120%) scaleX(-500%);
+
+    @media (prefers-reduced-motion: no-preference) {
+      will-change: transform;
+      transition: transform 350ms;
+    }
+  }
+
+  &:hover ${SaleFlag}::before {
+    @media (prefers-reduced-motion: no-preference) {
+      will-change: transform;
+      transition: transform 300ms;
     }
   }
 `;
@@ -124,27 +199,6 @@ const ColorInfo = styled.p`
 const SalePrice = styled.span`
   font-weight: ${WEIGHTS.medium};
   color: var(--color-primary);
-`;
-
-const Flag = styled.div`
-  position: absolute;
-  top: 12px;
-  right: -4px;
-  background: red;
-  height: 32px;
-  line-height: 32px;
-  padding: 0 10px;
-  font-size: ${14 / 18}rem;
-  font-weight: ${WEIGHTS.bold};
-  color: var(--color-white);
-  border-radius: 2px;
-`;
-
-const SaleFlag = styled(Flag)`
-  background-color: var(--color-primary);
-`;
-const NewFlag = styled(Flag)`
-  background-color: var(--color-secondary);
 `;
 
 export default ShoeCard;
