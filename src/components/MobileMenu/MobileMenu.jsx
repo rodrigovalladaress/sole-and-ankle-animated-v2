@@ -2,7 +2,7 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 import * as Dialog from "@radix-ui/react-dialog";
 
-import { QUERIES, WEIGHTS } from "../../constants";
+import { WEIGHTS } from "../../constants";
 
 import UnstyledButton from "../UnstyledButton";
 import Icon from "../Icon";
@@ -12,31 +12,33 @@ const MobileMenu = ({ isOpen, onDismiss }) => {
   return (
     <Dialog.Root open={isOpen} onOpenChange={onDismiss}>
       <Dialog.Portal>
-        <Overlay />
-        <Content>
-          <CloseButton onClick={onDismiss}>
-            <Icon id="close" />
-            <VisuallyHidden>Dismiss menu</VisuallyHidden>
-          </CloseButton>
-          <VisuallyHidden>
-            <Dialog.Title>Mobile navigation</Dialog.Title>
-            <Dialog.Description>Mobile navigation</Dialog.Description>
-          </VisuallyHidden>
-          <Filler />
-          <Nav>
-            <NavLink href="/sale">Sale</NavLink>
-            <NavLink href="/new">New&nbsp;Releases</NavLink>
-            <NavLink href="/men">Men</NavLink>
-            <NavLink href="/women">Women</NavLink>
-            <NavLink href="/kids">Kids</NavLink>
-            <NavLink href="/collections">Collections</NavLink>
-          </Nav>
-          <Footer>
-            <SubLink href="/terms">Terms and Conditions</SubLink>
-            <SubLink href="/privacy">Privacy Policy</SubLink>
-            <SubLink href="/contact">Contact Us</SubLink>
-          </Footer>
-        </Content>
+        <Wrapper>
+          <Overlay />
+          <Content>
+            <CloseButton onClick={onDismiss}>
+              <Icon id="close" />
+              <VisuallyHidden>Dismiss menu</VisuallyHidden>
+            </CloseButton>
+            <VisuallyHidden>
+              <Dialog.Title>Mobile navigation</Dialog.Title>
+              <Dialog.Description>Mobile navigation</Dialog.Description>
+            </VisuallyHidden>
+            <Filler />
+            <Nav>
+              <NavLink href="/sale">Sale</NavLink>
+              <NavLink href="/new">New&nbsp;Releases</NavLink>
+              <NavLink href="/men">Men</NavLink>
+              <NavLink href="/women">Women</NavLink>
+              <NavLink href="/kids">Kids</NavLink>
+              <NavLink href="/collections">Collections</NavLink>
+            </Nav>
+            <Footer>
+              <SubLink href="/terms">Terms and Conditions</SubLink>
+              <SubLink href="/privacy">Privacy Policy</SubLink>
+              <SubLink href="/contact">Contact Us</SubLink>
+            </Footer>
+          </Content>
+        </Wrapper>
       </Dialog.Portal>
     </Dialog.Root>
   );
@@ -52,13 +54,13 @@ const fadeIn = keyframes`
  }
 `;
 
-const moveLeft = keyframes`
+const doorCloseLeft = keyframes`
  from {
-  transform: translateX(100%);
-}
+  transform: rotateY(0.25turn);
+ }
 
-to {
-  transform: translateX(0%);
+ to {
+  transform: rotateY(0turn);
  }
 `;
 
@@ -72,23 +74,33 @@ const Overlay = styled(Dialog.Overlay)`
   }
 `;
 
-const Content = styled(Dialog.Content)`
+const Wrapper = styled.div`
+  perspective: 400px;
+  transform-style: preserve-3d;
   position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const Content = styled(Dialog.Content)`
   background: white;
   width: 300px;
   height: 100%;
   padding: 24px 32px;
   display: flex;
   flex-direction: column;
+  transform-style: preserve-3d;
+  transform-origin: right center;
 
   @media (prefers-reduced-motion: no-preference) {
-    animation: ${moveLeft} 300ms 200ms both;
+    animation: ${doorCloseLeft} 600ms 200ms both
+      cubic-bezier(0.12, 0.06, 0, 0.8);
 
     > * {
-      animation: ${fadeIn} 450ms 400ms both;
+      animation: ${fadeIn} 450ms 350ms both;
     }
   }
 `;
