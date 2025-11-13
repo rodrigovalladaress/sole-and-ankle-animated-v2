@@ -83,6 +83,7 @@ const Wrapper = styled.div`
   height: 100%;
   display: flex;
   justify-content: flex-end;
+  isolation: isolate;
 `;
 
 const Content = styled(Dialog.Content)`
@@ -94,13 +95,14 @@ const Content = styled(Dialog.Content)`
   flex-direction: column;
   transform-style: preserve-3d;
   transform-origin: right center;
+  z-index: 1;
 
   @media (prefers-reduced-motion: no-preference) {
     animation: ${doorCloseLeft} 600ms 200ms both
-      cubic-bezier(0.12, 0.06, 0, 0.8);
+      cubic-bezier(0.12, 0.06, 0, 1.2);
 
     > * {
-      animation: ${fadeIn} 450ms 350ms both;
+      animation: ${fadeIn} 450ms 400ms both;
     }
   }
 `;

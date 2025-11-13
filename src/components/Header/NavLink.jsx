@@ -6,18 +6,19 @@ const NavLink = ({ href, children }) => (
   <Link href={href}>
     <ChildrenWrapper>
       <Child>{children}</Child>
-      <BoldChild>{children}</BoldChild>
+      <BoldChild aria-hidden>{children}</BoldChild>
     </ChildrenWrapper>
   </Link>
 );
 
 const Child = styled.span`
-  transition: transform 350ms, opacity 650ms;
+  transition: transform 350ms, opacity 650ms, filter 350ms;
   display: inline-block;
   border: 1px solid var(--color-gray-900);
   padding: 0px 6px;
   /* Add a bit of margin so the borders are shown */
-  margin: 2px;
+  margin-inline: 2px;
+  background-color: var(--color-white);
 `;
 
 const BoldChild = styled(Child)`
@@ -29,6 +30,7 @@ const BoldChild = styled(Child)`
   top: calc(100%);
   transform-origin: center top;
   transform: rotateX(-0.25turn);
+  filter: brightness(40%);
 `;
 
 const ChildrenWrapper = styled.span`
@@ -59,8 +61,9 @@ const Link = styled.a`
 
   &:hover ${BoldChild} {
     opacity: 1;
-    transform: translateY(calc(-100% - 4px)) rotateX(0turn);
-    transition: transform 250ms, opacity 50ms;
+    transform: translateY(calc(-100% - 0px)) rotateX(0turn);
+    transition: transform 250ms, opacity 50ms, filter 250ms;
+    filter: brightness(100%);
   }
 `;
 
