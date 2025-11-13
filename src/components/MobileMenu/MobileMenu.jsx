@@ -1,12 +1,12 @@
-import React from 'react';
-import styled from 'styled-components';
-import * as Dialog from '@radix-ui/react-dialog';
+import React from "react";
+import styled, { keyframes } from "styled-components";
+import * as Dialog from "@radix-ui/react-dialog";
 
-import { QUERIES, WEIGHTS } from '../../constants';
+import { QUERIES, WEIGHTS } from "../../constants";
 
-import UnstyledButton from '../UnstyledButton';
-import Icon from '../Icon';
-import VisuallyHidden from '../VisuallyHidden';
+import UnstyledButton from "../UnstyledButton";
+import Icon from "../Icon";
+import VisuallyHidden from "../VisuallyHidden";
 
 const MobileMenu = ({ isOpen, onDismiss }) => {
   return (
@@ -42,10 +42,34 @@ const MobileMenu = ({ isOpen, onDismiss }) => {
   );
 };
 
+const fadeIn = keyframes`
+ from {
+  opacity: 0;
+ }
+
+ to {
+  opacity: 1
+ }
+`;
+
+const moveLeft = keyframes`
+ from {
+  transform: translateX(100%);
+}
+
+to {
+  transform: translateX(0%);
+ }
+`;
+
 const Overlay = styled(Dialog.Overlay)`
   position: fixed;
   inset: 0;
   background: var(--color-backdrop);
+
+  @media (prefers-reduced-motion: no-preference) {
+    animation: ${fadeIn} 200ms both;
+  }
 `;
 
 const Content = styled(Dialog.Content)`
@@ -59,6 +83,14 @@ const Content = styled(Dialog.Content)`
   padding: 24px 32px;
   display: flex;
   flex-direction: column;
+
+  @media (prefers-reduced-motion: no-preference) {
+    animation: ${moveLeft} 300ms 200ms both;
+
+    > * {
+      animation: ${fadeIn} 450ms 400ms both;
+    }
+  }
 `;
 
 const CloseButton = styled(UnstyledButton)`
